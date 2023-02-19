@@ -1,0 +1,49 @@
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+}
+
+.goog-te-gadget-simple {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.banner {
+  /* https://via.placeholder.com/3840x512.png */
+  background-image: url("/banner.png");
+  height: 512px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-bottom: 1px solid black;
+}
+
+.light {
+  background-color: #FEFEFE;
+  color: black;
+}
+
+.top80 { 
+    margin-top: 80px; 
+}
+
+.bottom80 { 
+    margin-bottom: 80px; 
+}
+
+.width200 {
+    width: 200px;
+}
+
+.height200 {
+    height: 200px;
+}
+
+body {
+ /* avoid google translate adds a "top" */
+ top:0 !important;
+ padding-top: 50px;
+}
+
+.box {
+    float:left;
+}

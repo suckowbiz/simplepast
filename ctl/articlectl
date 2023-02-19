@@ -1,0 +1,232 @@
+#!/usr/bin/env bash
+#
+# Intentionally written to manage an article's 'meta.json' files and images.
+# Requires "imageMagick" and "find" commands. 
+set -e
+
+#######################################
+# Runs the script to interprete the arguments and invoke proper functionality.
+function main() {
+  if [ "$#" -ne 2 ]; then
+      printHelp
+      exit
+  fi
+
+  ARTICLE_PATH="$2"
+  readonly ARTICLE_PATH
+  
+  CMD="$1"
+  readonly CMD
+  case "$CMD" in
+    bootstrap)
+      bootstrap "$ARTICLE_PATH"
+    ;;
+    mogrify)
+      jsonString="$(indexImages "$ARTICLE_PATH")"
+      writeFile "${jsonString}" "${ARTICLE_PATH}/img/meta.json"
+
+      jsonString="$(indexVideos "$ARTICLE_PATH")"
+      writeFile "${jsonString}" "${ARTICLE_PATH}/vid/meta.json"
+
+      copyImagesToThumbnails
+      mogrifyImg
+      mogrifyThumb
+    ;;
+    *)
+      printHelp
+    ;;
+  esac
+}
+
+#######################################
+# Prints usage information.
+function printHelp() {
+  echo -e "\n"
+  echo "Usage: articlectl [COMMAND] <article path>"
+  echo -e "\n"
+  echo "A self-sufficient script for articles."
+  echo -e "\n"
+  echo "Commands:"
+  echo "  bootstrap   Creates a new article blueprint."
+  echo "  mogrify     Reads image and video folders and creates 'meta.json' files, where required."
+  echo "              Creates thumbnails and resizes images for proper browser display."
+  echo -e "\n"
+  echo "Examples:"
+  echo "  Example 1 - create a new article '1'      $ simplepast bootstrap ./articles/2023/1"
+  echo "  Example 2 - create thumbnails and resize  $ simplepast mogrify ./articles/2023/1"
+  echo -e "\n"
+  echo "For more help on how to use this script, head to https://github.com/suckowbiz/simplepast."
+}
+
+#######################################
+# Checks for error and exits 1 if action return code not equal zero to report error.
+# Arguments:
+#   1 - action description
+#   2 - action return code
+function failOrProceed() {
+  if [ "$2" -ne 0 ]; then
+    echo "$1, failed!" > /dev/tty
+    exit 1
+  fi
+}
+
+#######################################
+# Creates files and folders, mandatory to a new article.
+# Arguments:
+#   1 - path to create new article
+function bootstrap() {
+  local articlePath="$1"
+  if [[ -d "$articlePath" ]]; then
+    echo "Expectation '$articlePath' does not already exist, failed!" >/dev/tty
+    exit 1
+  fi
+  mkdir --parent "$articlePath"/img "$articlePath"/vid
+  touch "$articlePath"/content.txt "$articlePath"/heading.txt "$articlePath"/date.txt
+  local today=$(date +"%d. %B %Y")
+  echo "$today" > articlePath/date.txt
+}
+
+#######################################
+# Reads all images (non recursively) of an '/img' folder in given path.
+# Exits 1 if no '/img' folder is present.
+# Arguments:
+#   path to article
+# Returns:
+#   JSON string
+function indexImages() {
+    local width
+    local height
+    local name
+    local jsonStr
+
+    readonly IMG_PATH="${ARTICLE_PATH}/img"
+    if [[ ! -d "$IMG_PATH" ]]; then
+        echo "Expectation '$1' contains a directory '/img', failed!" >/dev/tty
+        exit 1
+    fi
+        
+    jsonStr='{"images":['
+    IMAGES="$(find "${IMG_PATH}" -maxdepth 1 -type f 2>/dev/tty)"
+    failOrProceed "looking up images" "$?"
+    readonly IMAGES
+    for i in $IMAGES; do
+      if [[ $jsonStr == *"name"* ]]; then
+        jsonStr="${jsonStr},"
+      fi
+      
+      name=$(basename "$i" 2>/dev/tty)
+      failOrProceed "looking up basename" "$?"
+      if [[ "$name" = "img" || "$name" = "meta.json" ]]; then
+        continue
+      fi
+      width=$(/usr/bin/identify -format "%w" "$i")
+      failOrProceed "trial to identify image width of $i" "$?"
+      height=$(/usr/bin/identify -format "%h" "$i")
+      failOrProceed "trial to identify image height of $i" "$?"
+
+      jsonStr="${jsonStr}{\"name\": \"$name\",\"width\": $width,\"height\": $height}"
+    done
+    jsonStr="${jsonStr}]}"
+
+    echo "${jsonStr}"
+}
+
+#######################################
+# Reads all vides (non recursively) of an '/vid' folder in given path.
+# Exits 1 if no '/img' folder is present.
+# Arguments:
+#   path to article
+# Returns:
+#   JSON string
+function indexVideos() {
+    local name
+    local jsonStr
+
+    readonly VID_PATH="${ARTICLE_PATH}/vid"
+    if [[ ! -d "$VID_PATH" ]]; then
+        echo "Expectation '$1' contains a directory '/vid', failed!" >/dev/tty
+        exit 1
+    fi
+
+    VIDEOS="$(find "${VID_PATH}" -maxdepth 1)"
+    failOrProceed "trial to find videos" "$?"
+    readonly VIDEOS
+    jsonStr='{"videos":['
+    for i in $VIDEOS; do
+      # Take care: Pattern matching requires "==" instead of "=".
+      if [[ $jsonStr == *"."* ]]; then
+        jsonStr="${jsonStr},"
+      fi
+      
+      name=$(basename "$i")
+      if [[ "$name" = "vid" || "$name" = "meta.json" ]]; then
+        continue
+      fi
+      jsonStr="${jsonStr}\"$name\""
+    done
+    jsonStr="${jsonStr}]}"
+
+    echo "${jsonStr}"
+}
+
+#######################################
+# Writes $1 to $2.
+# Arguments:
+#   1 - content to write
+#   2 - path to write to
+function writeFile() {
+  echo "$1" > "$2"
+}
+
+function copyImagesToThumbnails() {
+    readonly THUMB_PATH="${ARTICLE_PATH}/img/thumb"
+    rm -rf "$THUMB_PATH"
+    mkdir "$THUMB_PATH"
+    find "${ARTICLE_PATH}/img" -maxdepth 1 -type f -not -iname '*meta.json*' -exec cp '{}' "$THUMB_PATH" ';'
+    failOrProceed "trial to copy thumbnails" "$?"
+}
+
+#######################################
+# Returns a string of found image files (png,jpg) or empty string.
+# Arguments:
+#   1 - path to find images (non recursive)
+function listImages() {
+  local images
+  images=$(find "$1" -maxdepth 1 -type f -name "*.jpg" -o -name "*.JPG" -o -name "*.png" -o -name "*.PNG")
+  failOrProceed "listing images of  ${ARTICLE_PATH}/img/" "$?"
+  echo "$images"
+}
+
+function mogrifyThumb() {
+  if [[ ! -d "${ARTICLE_PATH}/img/thumb/" ]];then
+    echo "Expectation '${ARTICLE_PATH}/img/thumb/' exists, failed." >/dev/tty
+    exit 1
+  fi
+  
+  local images
+  images=$(listImages "${ARTICLE_PATH}"/img/)
+  if [[ "$images" = "" ]]; then
+    return
+  fi
+
+  /usr/bin/mogrify "${ARTICLE_PATH}/img/thumb/*.{jpeg,JPEG,jpg,JPG,png,PNG}[400x]" -quality 70 1>/dev/null
+  failOrProceed "mogrify ${ARTICLE_PATH}/img/thumb/*" "$?"
+}
+
+function mogrifyImg() {
+  if [[ ! -d "${ARTICLE_PATH}/img" ]];then
+    echo "Expectation directory '${ARTICLE_PATH}img' exists, failed." >/dev/tty
+    exit 1
+  fi
+
+  local images
+  images=$(listImages "${ARTICLE_PATH}"/img/)
+  if [[ "$images" = "" ]]; then
+    return
+  fi
+
+  /usr/bin/mogrify "${ARTICLE_PATH}/img/*.{jpeg,JPEG,jpg,JPG,png,PNG}[x1050]" -quality 80 1>/dev/null
+  failOrProceed "mogrify ${ARTICLE_PATH}/img/*" "$?"
+}
+
+main "$@"; exit

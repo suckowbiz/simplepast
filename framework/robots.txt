@@ -1,0 +1,3 @@
+# Inentionally created to disallow any search engine robot to keep this page private.
+user-agent: *
+disallow: /
