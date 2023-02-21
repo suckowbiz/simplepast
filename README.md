@@ -7,7 +7,7 @@
 
 It comes with a CLI called `articlectl` to create file based news posts.
 
-![Screenshot](./screen.png)
+> ![Screenshot](./screen.png)
 
 ## Features
 
