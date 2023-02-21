@@ -1,3 +1,6 @@
+![CI/CD Status](https://img.shields.io/github/actions/workflow/status/suckowbiz/simplepast/publish.yml)
+![License](https://img.shields.io/github/license/suckowbiz/simplepast)
+
 # SimplePast
 
 `SimplePast` is a HTML/CSS/JavaSript based framework to publish a weblog on the World Wide Web.
@@ -28,55 +31,81 @@ JavaScript is executed on the client side, only. The client requests meta inform
 
 ## Basic Usage
 
-Steps:
+Steps, to configure and run `SimplePast`:
 
 1. Create a configuration file to set up `SimplePlast`:
 
-   ```
-   wget https://github.com/suckowbiz/simplepast/blob/main/blueprints/config.json
+   ```shell
+   wget https://raw.githubusercontent.com/suckowbiz/simplepast/main/blueprints/config.json
    ```
 
-1. Create a local file storage as a root for articles:
+1. Create a local file storage as a root for articles. Consider current year as initial article folder:
 
-  ```shell
-  mkdir -p $PWD/articles/2023
-  ```
+   ```shell
+   $ mkdir --parent articles/$(date +"%Y")
+   ```
 
 1. Bootstrap the first article to have content to display:
 
-  ```shell
-  ```
+   ```shell
+   # Consider current uid and gid to set the ownership of new files to current user.
+   docker run \
+     --tty \
+     --user $(id -u):$(id -g) \
+     --volume $PWD/articles:/articles \
+     suckowbiz/articlectl bootstrap /articles/$(date +"%Y")/1
+   .
+   └── articles
+       └── 2023
+           └── 1
+               ├── content.txt
+               ├── date.txt
+               ├── heading.txt
+               ├── img
+               └── vid
+   ```
 
-1. Run `SimplePast` to serve content:
+1. Provide news content to customize the bootstrapped article:
 
-```shell
-$ docker run -p 80:80 \
-		-v $$PWD/articles:/usr/share/caddy/articles \
-		-v $$PWD/config.json:/usr/share/caddy/config.json \
-		-v $$PWD/banner.png:/usr/share/caddy/banner.png \
-		suckowbiz/simplepast
-```
+   ```shell
+   vi articles/$(date +"%Y")/1/content.txt
+   vi articles/$(date +"%Y")/1/heading.txt
+   # (optional) place images into articles/$(date +"Y")/1/img/
+   # (optional) place video(s) into articles/$(date +"Y")/1/vid/
+   ```
 
-TBD.
+1.  Use `articlectl` to create thumbnails and resize images of the created article.
 
-`docker run --rm -p 80:80 suckowbiz/simplepast:main`
+    ```shell
+    docker run \
+      --tty \
+      --user $(id -u):$(id -g) \
+      --volume $PWD/articles:/articles \
+      suckowbiz/articlectl mogrify /articles/$(date +"%Y")/1
+    ```
 
-## Configuration
+1. Run `SimplePast` to publish the created article:
 
-Any configuration is based on a single configuration file. A blueprint is located at `./blueprints/config.json`.
+   ```shell
+   # This example follows the basic Caddy example as of https://hub.docker.com/_/caddy.
+   $ docker run \
+       --rm \
+       --name simplepast \
+       --publish 80:80 \
+       --volume $PWD/articles:/usr/share/caddy/articles \
+       --volume $PWD/config.json:/usr/share/caddy/config.json \
+       suckowbiz/simplepast
+   ```
 
-```json
-{
-    "pageTitle": "",
-    "pageHeading": "",
-    "copyright": "",
-    "archiveStart": 0,
-    "btnPrevTitle": "",
-    "btnAllTitle": "",
-    "linkHomeTitle": "",
-    "linkArchiveTitle": ""
-}
-```
+1. Visit: `https://localhost`
+
+## Customization
+
+## (Caddy) Webserver Configuration
+
+The `SimplePlast` Dockerfile is directly inheriting the official Caddy Dockerfile. Thus all options/examples of the official Caddy Dockerfile apply. See [https://hub.docker.com/_/caddy](https://hub.docker.com/_/caddy) for configuration options.
+
+### SimplePast Configuration
 
 The configuration options are:
 
@@ -91,13 +120,21 @@ The configuration options are:
 | `linkHomeTitle` | Title of the text link to jump to the start page. | "Home" |
 | `linkArchiveTitle` | Title of the dropdown list to switch the year | "Archive" |
 
-## Articles
+### Frontpage Banner 
 
-TBD.
+Replace the default frontpage banner with a new one to customize it. It is assumed the new banner image is located at `./banner.png`:
+
+```shell
+$ docker run -p 80:80 \
+  --volume $PWD/articles:/usr/share/caddy/articles \
+	--volume $PWD/config.json:/usr/share/caddy/config.json \
+  --volume $PWD/banner.png:/usr/share/caddy/banner.png \
+	suckowbiz/simplepast
+```
 
 ## 3rd Party Software
 
-SimplePast uses third party libraries to provide a GUI. All of them are free to use.
+SimplePast uses third party libraries to provide a web GUI:
 
 - [Twitter Bootstrap](https://getbootstrap.com/) as frontend toolkit.  
   License: [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
@@ -110,6 +147,6 @@ SimplePast uses third party libraries to provide a GUI. All of them are free to 
 - [PhotoSwipe](https://github.com/dimsemenov/photoswipe) as lightbox.  
   License: [MIT](https://github.com/dimsemenov/PhotoSwipe/blob/master/LICENSE)
 
-## License
+## SimplePast License
 
 `SimplePast` is licensed under MIT license.

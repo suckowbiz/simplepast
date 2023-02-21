@@ -81,9 +81,13 @@ function bootstrap() {
     exit 1
   fi
   mkdir --parent "$articlePath"/img "$articlePath"/vid
-  touch "$articlePath"/content.txt "$articlePath"/heading.txt "$articlePath"/date.txt
-  local today=$(date +"%d. %B %Y")
-  echo "$today" > articlePath/date.txt
+
+  date +"%d. %B %Y" > "$articlePath"/date.txt
+  echo "CONTENT" > "$articlePath"/content.txt
+  echo "HEADING" > "$articlePath"/heading.txt
+
+  # Print the folder structure to display the result.
+  tree "$articlePath" >/dev/tty
 }
 
 #######################################
