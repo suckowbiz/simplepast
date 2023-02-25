@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version v0.2.2
+
+Bugfix:
+
+- Avoid creating illegal JSON when skipping non-multimedia files.
+
 ## Version v0.2.1
 
 Bugfix:
