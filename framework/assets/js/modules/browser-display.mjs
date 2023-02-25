@@ -74,7 +74,7 @@ export default class BrowserDisplay {
             year = new Date().getFullYear();
         }
         document.getElementById('pageYear').innerHTML = year;
-        document.getElementById('copyright').innerHTML = year + ' ' + config.copyright;
+        document.getElementById('copyright').innerHTML = currentYear + ' ' + config.copyright;
     }
     static masonry() {
         var latestFigures = Array.from(document.querySelectorAll('.figures')).pop();

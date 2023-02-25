@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version v0.3.4
+
+Bugfix:
+
+- Fix copyright year.
+
 ## Version v0.3.3
 
 Bugfix:
