@@ -110,26 +110,23 @@ function indexImages() {
     fi
         
     jsonStr='{"images":['
-    IMAGES="$(find "${IMG_PATH}" -maxdepth 1 -type f 2>/dev/tty)"
-    failOrProceed "looking up images" "$?"
-    readonly IMAGES
-    for i in $IMAGES; do
-      if [[ $jsonStr == *"name"* ]]; then
+    while read -r FILE; do
+       if [[ $jsonStr == *"name"* ]]; then
         jsonStr="${jsonStr},"
       fi
       
-      name=$(basename "$i" 2>/dev/tty)
+      name=$(basename "$FILE" 2>/dev/tty)
       failOrProceed "looking up basename" "$?"
       if [[ "$name" = "img" || "$name" = "meta.json" ]]; then
         continue
       fi
-      width=$(/usr/bin/identify -format "%w" "$i")
-      failOrProceed "trial to identify image width of $i" "$?"
-      height=$(/usr/bin/identify -format "%h" "$i")
-      failOrProceed "trial to identify image height of $i" "$?"
+      width=$(/usr/bin/identify -format "%w" "$FILE")
+      failOrProceed "trial to identify image width of $FILE" "$?"
+      height=$(/usr/bin/identify -format "%h" "$FILE")
+      failOrProceed "trial to identify image height of $FILE" "$?"
 
       jsonStr="${jsonStr}{\"name\": \"$name\",\"width\": $width,\"height\": $height}"
-    done
+    done < <(find "${IMG_PATH}" -maxdepth 1 -type f)
     jsonStr="${jsonStr}]}"
 
     echo "${jsonStr}"
@@ -152,22 +149,19 @@ function indexVideos() {
         exit 1
     fi
 
-    VIDEOS="$(find "${VID_PATH}" -maxdepth 1)"
-    failOrProceed "trial to find videos" "$?"
-    readonly VIDEOS
     jsonStr='{"videos":['
-    for i in $VIDEOS; do
+    while read -r VIDEO; do
       # Take care: Pattern matching requires "==" instead of "=".
       if [[ $jsonStr == *"."* ]]; then
         jsonStr="${jsonStr},"
       fi
       
-      name=$(basename "$i")
+      name=$(basename "$VIDEO")
       if [[ "$name" = "vid" || "$name" = "meta.json" ]]; then
         continue
       fi
       jsonStr="${jsonStr}\"$name\""
-    done
+    done < <(find "${VID_PATH}" -maxdepth 1)
     jsonStr="${jsonStr}]}"
 
     echo "${jsonStr}"
