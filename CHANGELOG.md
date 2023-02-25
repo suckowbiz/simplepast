@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version v0.3.3
+
+Bugfix:
+
+- Fix archive config option.
+
 ## Version v0.3.2
 
 Bugfix:

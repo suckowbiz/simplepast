@@ -59,9 +59,9 @@ export default class BrowserDisplay {
         elem.innerHTML = window.location.hostname;
 
         var currentYear = new Date().getFullYear();
-        var firstYear = parseInt(config.archiveDropDownFirstYear)
+        var firstYear = parseInt(config.archiveStart)
         if (isNaN(firstYear)) {
-            throw new Error("Cannot parse as a number: "+config.archiveDropDownFirstYear)
+            throw new Error("Cannot parse as a number: "+config.archiveStart)
         }
         for (var i = firstYear; i <= currentYear; i++) {
             var elem = document.createElement('li');
