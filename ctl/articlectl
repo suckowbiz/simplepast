@@ -127,7 +127,7 @@ function indexImages() {
       failOrProceed "trial to identify image height of $FILE" "$?"
 
       jsonStr="${jsonStr}{\"name\": \"$name\",\"width\": $width,\"height\": $height}"
-    done < <(find "${IMG_PATH}" -maxdepth 1 -type f)
+    done < <(find "${IMG_PATH}" -maxdepth 1 -type f | sort)
     jsonStr="${jsonStr}]}"
 
     echo "${jsonStr}"
@@ -163,7 +163,7 @@ function indexVideos() {
       fi
       
       jsonStr="${jsonStr}\"$name\""
-    done < <(find "${VID_PATH}" -maxdepth 1)
+    done < <(find "${VID_PATH}" -maxdepth 1 | sort)
     jsonStr="${jsonStr}]}"
 
     echo "${jsonStr}"

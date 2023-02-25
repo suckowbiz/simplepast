@@ -1,1 +1,24 @@
-{"images":[{"name": "photo-4.jpg","width": 1400,"height": 1050},{"name": "photo-2.jpg","width": 2100,"height": 1050},{"name": "photo-3.jpg","width": 1400,"height": 1050},{"name": "photo-1.jpg","width": 2100,"height": 1050}]}
+{
+    "images": [
+        {
+            "name": "photo-4.jpg",
+            "width": 1400,
+            "height": 1050
+        },
+        {
+            "name": "photo-2.jpg",
+            "width": 2100,
+            "height": 1050
+        },
+        {
+            "name": "photo-3.jpg",
+            "width": 1400,
+            "height": 1050
+        },
+        {
+            "name": "photo-1.jpg",
+            "width": 2100,
+            "height": 1050
+        }
+    ]
+}
