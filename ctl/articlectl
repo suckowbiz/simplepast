@@ -111,15 +111,16 @@ function indexImages() {
         
     jsonStr='{"images":['
     while read -r FILE; do
-       if [[ $jsonStr == *"name"* ]]; then
-        jsonStr="${jsonStr},"
-      fi
-      
       name=$(basename "$FILE" 2>/dev/tty)
       failOrProceed "looking up basename" "$?"
       if [[ "$name" = "img" || "$name" = "meta.json" ]]; then
         continue
       fi
+      
+      if [[ $jsonStr == *"name"* ]]; then
+        jsonStr="${jsonStr},"
+      fi
+      
       width=$(/usr/bin/identify -format "%w" "$FILE")
       failOrProceed "trial to identify image width of $FILE" "$?"
       height=$(/usr/bin/identify -format "%h" "$FILE")
@@ -151,15 +152,16 @@ function indexVideos() {
 
     jsonStr='{"videos":['
     while read -r VIDEO; do
+      name=$(basename "$VIDEO")
+      if [[ "$name" = "vid" || "$name" = "meta.json" ]]; then
+        continue
+      fi
+
       # Take care: Pattern matching requires "==" instead of "=".
       if [[ $jsonStr == *"."* ]]; then
         jsonStr="${jsonStr},"
       fi
       
-      name=$(basename "$VIDEO")
-      if [[ "$name" = "vid" || "$name" = "meta.json" ]]; then
-        continue
-      fi
       jsonStr="${jsonStr}\"$name\""
     done < <(find "${VID_PATH}" -maxdepth 1)
     jsonStr="${jsonStr}]}"
