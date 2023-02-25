@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version v0.3.0
+
+Enhancements:
+
+- Sort images by name in ascending order.
+
 ## Version v0.2.2
 
 Bugfix:
