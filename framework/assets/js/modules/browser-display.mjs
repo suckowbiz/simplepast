@@ -52,6 +52,7 @@ export default class BrowserDisplay {
         document.getElementById('btnAllTitle').innerHTML = config.btnAllTitle;
         document.getElementById('linkHomeTitle').innerHTML = config.linkHomeTitle;
         document.getElementById('linkArchiveTitle').innerHTML = config.linkArchiveTitle;
+        document.querySelector('meta[name="google-site-verification"]').setAttribute("content", config.googleSiteVerification);
 
         var elem = document.getElementById('navbarBrandLink');
         elem.setAttribute("href", window.location.origin);

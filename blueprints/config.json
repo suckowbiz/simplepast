@@ -1,11 +1,12 @@
 {
     "_comment": "This file follows the Google JSON Style Guide: https://google.github.io/styleguide/jsoncstyleguide.xml",
-    "pageTitle": "titel of the website",
-    "pageHeading": "heading on top of articles",
-    "copyright": "All rights reserved.",
     "archiveStart": 2023,
-    "btnPrevTitle": "title of button to load previous article",
     "btnAllTitle": "title of button to load all past articles",
+    "btnPrevTitle": "title of button to load previous article",
+    "copyright": "All rights reserved.",
+    "googleSiteVerification": "site verification code", 
+    "linkArchiveTitle": "title of dropdown list to switch year",
     "linkHomeTitle": "title of link to start page",
-    "linkArchiveTitle": "title of dropdown list to switch year"
+    "pageHeading": "heading on top of articles",
+    "pageTitle": "titel of the website"
 }
