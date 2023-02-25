@@ -13,5 +13,5 @@ smoketest: dockerfile
 	docker run \
 		--tty \
 		--user $$(id -u):$$(id -g) \
-		--volume $$PWD/../framework/articles:/articles \
-		suckowbiz/articlectl bootstrap /articles/2023/4
+		--volume $$PWD/../smoketest/articles:/articles \
+		suckowbiz/articlectl mogrify /articles/2023/1
