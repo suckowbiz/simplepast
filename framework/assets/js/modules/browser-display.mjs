@@ -116,7 +116,7 @@ export default class BrowserDisplay {
         }
 
         articleElem.querySelector('.figures').innerHTML = '';
-        let images = article.getImages();
+        let images = article.getImages().sort();
         if (images.length) {
             for (var i = 0; i < images.length; i++) {
                 const image = images[i];
