@@ -112,14 +112,15 @@ The configuration options are:
 
 | Option | Description | Example |
 | ------ | ----------- | ------- |
-| `pageTitle` | HTML title of the webpage. | "My newsblog" |
-| `pageHeading` | Frontpage heading. | "Dairy" |
-| `copyright` | Your copyright information. | "All rights reserved." |
 | `archiveStart` | The first entry for the drop down list to switch the year. It will be filled in until the current year is reached. | 2022 |
-| `btnPrevTitle` | Title of the button to load a previous article. | "Next" |
 | `btnAllTitle` | Title of the button to load all articles of the current year. | "All" |
-| `linkHomeTitle` | Title of the text link to jump to the start page. | "Home" |
+| `btnPrevTitle` | Title of the button to load a previous article. | "Next" |
+| `copyright` | Your copyright information. | "All rights reserved." |
+| `googleSiteVerification` | Google site verification content to verify ownership of a site. | "loremipsum" |
 | `linkArchiveTitle` | Title of the dropdown list to switch the year | "Archive" |
+| `linkHomeTitle` | Title of the text link to jump to the start page. | "Home" |
+| `pageHeading` | Frontpage heading. | "Dairy" |
+| `pageTitle` | HTML title of the webpage. | "My newsblog" |
 
 ### Frontpage Banner
 
