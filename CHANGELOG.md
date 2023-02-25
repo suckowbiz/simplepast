@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version v0.3.2
+
+Bugfix:
+
+- Fix archive listing.
+
 ## Version v0.3.1
 
 Bugfix:
