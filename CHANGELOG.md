@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version v0.3.1
+
+Bugfix:
+
+- Fix image sorting.
+
 ## Version v0.3.0
 
 Enhancements:
