@@ -2,6 +2,12 @@
 
 (Note: Cache-Busting is applyed by query params for simplepast in `index.html`. It needs to be kept changed.)
 
+## Version v0.3.5
+
+Bugfix:
+
+- Applied cache busting to enforce .js and .css reload when version changes.
+
 ## Version v0.3.4
 
 Bugfix:
