@@ -2,6 +2,12 @@
 
 (Note: Cache-Busting is applyed by query params for simplepast in `index.html`. It needs to be kept changed.)
 
+## Version v0.4.0
+
+Enhancements:
+
+- Descending order to represent articles in correct historical order.
+
 ## Version v0.3.5
 
 Bugfix:

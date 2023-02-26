@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: test simpleplast
-        run: node framework/assets/js/modules/test/unit-tests.js
+        run: node framework/assets/v1/js/modules/test/unit-tests.js
   articlectl:
     needs: unit-tests
     runs-on: ubuntu-latest

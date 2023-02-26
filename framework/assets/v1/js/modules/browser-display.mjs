@@ -20,15 +20,15 @@ export default class BrowserDisplay {
         document.getElementById('more-btn').style.visibility = 'hidden'
         document.getElementById('all-btn').style.visibility = 'hidden'
     }
-    static getArticleCount() {
-        let res = undefined
-        const articles = document.getElementsByTagName('article');
-        if (articles) {
-            res = articles.length;
+    static getArticlesLastChildId() {
+        let result = undefined
+        let articles = document.querySelectorAll('article')
+        if (articles.length) {
+            result = articles[articles.length-1].getAttribute("id")
         }
-        return res
+        return result
     }
-    static getYear = function () {
+    static mustGetYear = function () {
         var year = new URLSearchParams(window.location.search).get("year");
         if (!year) {
             year = new Date().getFullYear();

@@ -24,9 +24,25 @@ export default class ArticleDb {
             .then(meta => article.setVidURLs(path + '/vid', meta.videos));
         await Promise
             .all([p1, p2, p3, p4, p5])
-            .catch(() => {
-                article = undefined
+            .catch(error => {
+                console.log("Error fetching article: "+error)
+                article = undefined;
             });
         return article;
+    }
+    static async discoverLatestArticleIdOf(year) {
+        let result = undefined;
+        for (let id = 1, continueTrial = true; continueTrial; id++) {
+            await Fetcher
+                .fetchFile('/articles/' + year + '/' + id + '/heading.txt')
+                .then(() => {
+                    result = id;
+                })
+                .catch(() => {
+                    // Considering last failure as end of available articles to break.
+                    continueTrial = false;
+                })
+        }
+        return result
     }
 }
