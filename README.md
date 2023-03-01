@@ -48,12 +48,11 @@ Steps, to configure and run `SimplePast`:
 1. Bootstrap the first article to have content to display:
 
    ```shell
-   # Consider current uid and gid to set the ownership of new files to current user.
    $ docker run \
        --tty \
        --user $(id -u):$(id -g) \
        --volume $PWD/articles:/articles \
-       suckowbiz/articlectl bootstrap /articles/$(date +"%Y")/1
+       suckowbiz/articlectl bootstrap /articles/2023/1
    
    $ .
      └── articles
@@ -71,8 +70,8 @@ Steps, to configure and run `SimplePast`:
    ```shell
    $ vi articles/$(date +"%Y")/1/content.txt
    $ vi articles/$(date +"%Y")/1/heading.txt
-   # (optional) place images into articles/$(date +"Y")/1/img/
-   # (optional) place video(s) into articles/$(date +"Y")/1/vid/
+   # (optional) place images into articles/2023/1/img/
+   # (optional) place video(s) into articles/2023/1/vid/
    ```
 
 1. Use `articlectl` to create thumbnails and resize images of the created article.
