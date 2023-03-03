@@ -1,0 +1,16 @@
+{
+  "plattform": "github",
+  "labels": [
+    "dependencies"
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": [
+        "cdnjs"
+      ],
+      "labels": [
+        "cdnjs"
+      ]
+    }
+  ]
+}

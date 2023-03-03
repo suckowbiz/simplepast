@@ -8,7 +8,7 @@ try {
 
     Simplepast
         .populate()
-        .then((sp) => {
+        .then(sp => {
             // First populate the website to have e.g. templates in place for article rendering.
             sp.loadNextArticle();
         });
