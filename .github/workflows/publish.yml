@@ -1,7 +1,7 @@
 # Intentionally created to build and publish articlectl Docker image.
 # See: https://github.com/docker/metadata-action#semver
 ---
-name: Publish articlectl Docker image
+name: Build and Push
 
 on:
   push:

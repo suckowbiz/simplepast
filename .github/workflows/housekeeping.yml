@@ -1,8 +1,8 @@
-name: Renovate
+name: Update Dependencies
 on:
   schedule:
     # Every 15mins
-    - cron: '0/15 * * * *'
+    - cron: '5 * * * *'
 jobs:
   renovate:
     runs-on: ubuntu-latest
