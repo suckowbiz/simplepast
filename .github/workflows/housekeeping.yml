@@ -1,7 +1,9 @@
+---
 name: Update Dependencies
 on:
   push:
-    branches: [ master ]
+    branches:
+      - main
   schedule:
     # Every 15mins
     - cron: '15 * * * *'
