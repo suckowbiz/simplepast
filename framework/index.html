@@ -13,8 +13,7 @@
     -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="/assets/v1/css/style.css">
-    <!-- phowoswipe .js is included directly in the consuming module to load it where it is required. -->
+    <link rel="stylesheet" href="/assets/v2/css/style.css">
     <!--
         photoswipe
         License: MIT
@@ -44,7 +43,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <div class="nav-link" id="google_translate_element"></div>
-                        <script type="text/javascript" src="assets/v1/js/google-translate.js"></script>
+                        <script type="text/javascript" src="assets/v2/js/google-translate.js"></script>
                         <script type="text/javascript"
                             src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
                     </li>
@@ -138,9 +137,29 @@
         License: MIT
         github: https://github.com/suckowbiz/simplepast
     -->
-    <script type="module" src="assets/v1/js/modules/main.mjs" defer></script>
+    <script type="module" src="assets/v2/js/modules/main.mjs" defer></script>
     <script nomodule>
         window.alert("Your (old) browser does not support javascript modules. This is required to display this page!")
+    </script>
+    <!--
+        photoswipe
+        License: MIT
+        github: https://github.com/dimsemenov/photoswipe
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.4/umd/photoswipe-lightbox.umd.min.js"
+        integrity="sha512-Fr1D8tO0FkGPNvHX4higgA6VC6lN131oIwo4h/56Zsd3H8KmmjJvJmS/4zNHAquh8WpcmqLQk9YVQBgdxE2pYw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.4/umd/photoswipe.umd.min.js"
+        integrity="sha512-DXjj7djaqwwI1SOOparvm5rJBlDUPYJnN8Y+mdR6DexxBB7oEtbmv418ln9ILcirnYKihSqwKJAHuKzkowFNjQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+        // Photoswipe is used in a non-module way to keep the renovate-bot-based upgrade having everything at one place
+        // and avoid the need to handle cache-busting when upgrading imports in .js files.
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: '#articles',
+            children: 'a',
+            pswpModule: PhotoSwipe
+        });
     </script>
 </body>
 

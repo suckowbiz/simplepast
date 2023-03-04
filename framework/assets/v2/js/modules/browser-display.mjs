@@ -2,8 +2,6 @@
 
 import Fetcher from './fetcher.mjs'
 import Article from './article.mjs'
-import PhotoSwipeLightbox from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.4/photoswipe-lightbox.esm.min.js';
-import PhotoSwipe from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.4/photoswipe.esm.min.js';
 
 export default class BrowserDisplay {
     static disableNextBtns() {
@@ -88,11 +86,10 @@ export default class BrowserDisplay {
         }
     }
     static initPhotoSwipe() {
-        new PhotoSwipeLightbox({
-            gallery: '#articles',
-            children: 'a',
-            pswpModule: PhotoSwipe
-        }).init()
+        // Instead of importing photo-swipe in this module, it is created as a global constant in the .html
+        // page to keep all version strings in that .html file. That's way it remains  a no-brainer 
+        // to keeping things up-to-date using renovate (an there is no issue with cache busting for js here).
+        lightbox.init();
     }
     static renderArticle(article = Article()) {
         let template = document.querySelector('#article-tpl');

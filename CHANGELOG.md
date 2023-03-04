@@ -2,6 +2,8 @@
 
 (Note: Cache-Busting is applyed by query params for simplepast in `index.html`. It needs to be kept changed.)
 
+## Version vX.Y.Z (unreleased)
+
 ## Version v0.4.0
 
 Enhancements:
