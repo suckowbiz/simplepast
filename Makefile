@@ -9,7 +9,7 @@ unit-tests:
 	docker run \
 		--rm \
 		--name node \
-		--volume "$$PWD/framework/assets/v1/js/modules":/usr/src/app \
+		--volume "$$PWD/framework/assets/v2/js/modules":/usr/src/app \
 		--workdir /usr/src/app \
 		node test/unit-tests.js
 
