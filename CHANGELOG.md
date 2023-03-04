@@ -4,6 +4,8 @@
 
 ## Version vX.Y.Z (unreleased)
 
+- Update dependency photoswipe to v5.3.6
+
 ## Version v0.4.0
 
 Enhancements:
