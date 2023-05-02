@@ -42,7 +42,7 @@ Steps, to configure and run `SimplePast`:
 1. Create a local file storage as a root for articles. Consider current year as initial article folder:
 
    ```shell
-   $ mkdir --parent articles/$(date +"%Y")
+   $ mkdir --parent articles/2023
    ```
 
 1. Bootstrap the first article to have content to display:
