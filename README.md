@@ -68,8 +68,8 @@ Steps, to configure and run `SimplePast`:
 1. Provide news content to customize the bootstrapped article:
 
    ```shell
-   $ vi articles/$(date +"%Y")/1/content.txt
-   $ vi articles/$(date +"%Y")/1/heading.txt
+   $ vi articles/2023/1/content.txt
+   $ vi articles/2023/1/heading.txt
    # (optional) place images into articles/2023/1/img/
    # (optional) place video(s) into articles/2023/1/vid/
    ```
@@ -81,7 +81,7 @@ Steps, to configure and run `SimplePast`:
         --tty \
         --user $(id -u):$(id -g) \
         --volume $PWD/articles:/articles \
-        suckowbiz/articlectl mogrify /articles/$(date +"%Y")/1
+        suckowbiz/articlectl mogrify /articles/2023/1
     ```
 
 1. Run `SimplePast` to publish the created article:
