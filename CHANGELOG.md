@@ -6,6 +6,12 @@
 
 Updates:
 
+- 
+
+## Version v0.5.Z
+
+Updates:
+
 - Update dependency photoswipe to v5.3.8 
 - Update dependency font-awesome to v6.4.0
 
