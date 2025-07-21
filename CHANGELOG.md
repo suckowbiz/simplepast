@@ -4,7 +4,7 @@
 
 ## Version vX.Y.Z (unreleased)
 
-- TBD
+- Update dependency twitter bootstrap to v5.3.7
 
 ## Version v0.6.0
 
