@@ -7,6 +7,7 @@
 Updates:
 
 - Update dependency font-awesome to v6.7.2
+- Update dependency photoswipe to v5.4.4
 
 ## Version v0.5.0
 
