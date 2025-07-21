@@ -6,7 +6,7 @@
 
 Updates:
 
-- 
+- Update dependency photoswipe to v5.4.4
 
 ## Version v0.5.0
 
