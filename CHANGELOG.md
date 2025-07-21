@@ -6,7 +6,7 @@
 
 Updates:
 
-- 
+- Update dependency font-awesome to v6.7.2
 
 ## Version v0.5.0
 
