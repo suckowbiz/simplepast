@@ -4,6 +4,10 @@
 
 ## Version vX.Y.Z (unreleased)
 
+- TBD
+
+## Version v0.6.0
+
 Updates:
 
 - Update dependency font-awesome to v6.7.2
