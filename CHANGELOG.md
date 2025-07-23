@@ -2,9 +2,10 @@
 
 (Note: Cache-Busting is applyed by query params for simplepast in `index.html`. It needs to be kept changed.)
 
-## Version vX.Y.Z (unreleased)
+## Version v0.7.0
 
 - Update dependency twitter bootstrap to v5.3.7
+- Enhance articlectl to consider logically rotated images for meta.json rendering.
 
 ## Version v0.6.0
 

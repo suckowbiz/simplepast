@@ -121,9 +121,12 @@ function indexImages() {
         jsonStr="${jsonStr},"
       fi
       
-      width=$(/usr/bin/identify -format "%w" "$FILE")
+      # Convert is used to consider logically (but not physically) rotated images
+      # where width might be height and height might be width :).
+      width=$(/usr/bin/convert "$FILE" -auto-orient -format "%w" info:)
       failOrProceed "trial to identify image width of $FILE" "$?"
-      height=$(/usr/bin/identify -format "%h" "$FILE")
+
+      height=$(/usr/bin/convert "$FILE" -auto-orient -format "%h" info:)
       failOrProceed "trial to identify image height of $FILE" "$?"
 
       jsonStr="${jsonStr}{\"name\": \"$name\",\"width\": $width,\"height\": $height}"
