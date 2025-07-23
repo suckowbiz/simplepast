@@ -4,7 +4,8 @@
 
 ## Version v0.7.0
 
-- Update dependency twitter bootstrap to v5.3.7
+- Update dependency twitter bootstrap to v5.3.7.
+- Update fontawesome to v7.
 - Enhance articlectl to consider logically rotated images for meta.json rendering.
 - Addition of favicons.
 - Displaying a spinner while loading an article.
