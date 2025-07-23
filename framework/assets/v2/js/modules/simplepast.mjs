@@ -38,7 +38,8 @@ export default class Simplepast {
         return res
     }
     static async loadNextArticle() {
-        BrowserDisplay.disableNextBtns();
+        BrowserDisplay.displaySpinner();
+        BrowserDisplay.hideNextBtns();
 
         const year = BrowserDisplay.mustGetYear();
         const id = await Simplepast.discoverNextArticleId(year).then(id => { return id; });
@@ -53,10 +54,12 @@ export default class Simplepast {
                 BrowserDisplay.renderArticle(article)
                 BrowserDisplay.masonry()
                 BrowserDisplay.initPhotoSwipe()
-                BrowserDisplay.enableNextBtns();
+                BrowserDisplay.hideSpinner();
+                BrowserDisplay.displayNextBtns();
                 res = true;
             })
             .catch(error => {
+                BrowserDisplay.hideSpinner();
                 BrowserDisplay.hideNextBtns()
                 const err = 'Error to render article: ' + error
                 console.log(err)
