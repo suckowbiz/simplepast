@@ -6,6 +6,8 @@
 
 - Update dependency twitter bootstrap to v5.3.7
 - Enhance articlectl to consider logically rotated images for meta.json rendering.
+- Addition of favicons.
+- Displaying a spinner while loading an article.
 
 ## Version v0.6.0
 

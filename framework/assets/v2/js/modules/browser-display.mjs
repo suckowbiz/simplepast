@@ -4,19 +4,19 @@ import Fetcher from './fetcher.mjs'
 import Article from './article.mjs'
 
 export default class BrowserDisplay {
-    static disableNextBtns() {
-        this.#setNextBtnsDisabled(true);
+    static displaySpinner() {
+        document.getElementById('spinner').style.display = 'inline';
     }
-    static enableNextBtns() {
-        this.#setNextBtnsDisabled();
+    static hideSpinner() {
+        document.getElementById('spinner').style.display = 'none';
     }
-    static #setNextBtnsDisabled(disability = false) {
-        document.getElementById('more-btn').disabled = disability
-        document.getElementById('all-btn').disabled = disability
+    static displayNextBtns() {
+        document.getElementById('more-btn').style.display = 'inline'
+        document.getElementById('all-btn').style.display = 'inline'
     }
     static hideNextBtns() {
-        document.getElementById('more-btn').style.visibility = 'hidden'
-        document.getElementById('all-btn').style.visibility = 'hidden'
+        document.getElementById('more-btn').style.display = 'none'
+        document.getElementById('all-btn').style.display = 'none'
     }
     static getArticlesLastChildId() {
         let result = undefined
